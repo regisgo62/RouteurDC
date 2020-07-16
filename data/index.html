@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC>
+<html lang="fr">
+<head>
+  <title>Routeur ESP32</title>
+  <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+  
+  <!--link rel="stylesheet" href="styles.css" /-->
+   <style type="text/css">
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #e2e1e0;
+        color:blue;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: #e2e1e0;
+        margin: 20;
+        padding: 0;
+        height: 100%;
+        color:blue;
+    }
+      
+    form {
+        margin: 0 1em;
+        height: calc(100vh - 8em);
+        color:rgb(43, 43, 92);
+    }
+
+    h2 {
+      margin: 0 1em;
+    }
+    
+    h3 {
+      margin: 0 1em;
+      color:rgb(173, 79, 16);
+    }
+
+    p {
+      color:rgb(43, 43, 92);
+     
+    }
+
+} </style>
+     
+</head>
+
+
+
+
+
+
+<body>
+  <script>     
+  function refresh() {  
+      //document.getElementById('sortie2').value = 1;
+      document.location.reload(false);
+    }
+  </script>
+
+  
+<h2>Bienvenue sur l'interface de saisie des paramètres du Routeur </h2><br>
+
+
+<br>   
+      <form action="" method="POST" class="form-param">
+        <p>
+          <!--label for="reset"><br><br>Redemarrage Routeur: </label-->
+          <input  type="submit" name="reset" id="reset" title="Redemarrage"  
+                                value="Sauvegarde des données dans EEPROM avec redemarrage" ><br>
+        </p>
+      </form>
+      <form action="" method="POST" class="form-param">
+          <input  type="submit" name="defaut" id="defaut" title="Redemarrage"  
+                                value="Sauvegarde des données par defaut avec redemarrage" ><br><br>
+      </form>
+      <form action="" method="GET" class="form-param">
+        <p>
+          <!--label for="reset"><br><br>Redemarrage Routeur: </label-->
+          <input  type="submit" name="x" id="rafraichir" title="rafraichir"  
+                                value="Rafraichir" ><br><br>
+        </p>
+      </form>
+
+        <h1>Valeurs mesurées</h1> <br>
+                <p>
+                  <!--ce caractere sert à recevoir les infos de l'esp32-->~
+    
+               </p>
+                <br><br>
+              
+        <h1>Liste des options</h1> <br>
+
+          <form action="" method="POST" >
+            <label for="sortie2">Sortie2: </label>
+            <input type="number"  name="sortie2" id="sortie2" max="1" min="0" step="1" size="1" required/> <br><br> 
+          </form>
+          
+          <form action="" method="POST" >
+            <label for="relais">Relais:</label>
+            <input type="number" name="relais"  id="relais" max="2" min="0" step="1" size="1" required/>  0=Arrêt 1=Température 2=Tension<br><br>
+          </form>
+          
+          <form action="" method="POST" >
+           <label for="forcage">Forçage: </label>
+            <input type="number"  name="forcage" id="forcage" max="1" min="0" step="1" size="1" required/> <br><br> 
+          </form>
+          
+          <form action="" method="POST" >
+           <label for="duree-forcage">Durée du forçage en minute: </label>
+            <input type="number"  name="duree-forcage" id="duree-forcage" max="360" min="0" step="1" size="3" required/> <br><br> 
+           </form>
+
+           <form action="" method="POST" >
+            <label for="valeur-forcage">Pourcentage de puissance: </label>
+             <input type="number"   name="valeur-forcage" id="valeur-forcage"  max="100" min="0" step="1" size="3" required/> <br><br> 
+            </form>
+ 
+              <br><br>
+           
+        <h1>Liste des paramètres</h1> <br>
+  
+                <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="zeroPince">zeroPince: </label>
+                    <input type="number" name="zeroPince" id="zeroPince"  max="100" min="-100" step="0.01"><br><br>
+                  </div>
+                </form>
+              <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="coeffPince">coeffPince: </label>
+                    <input type="number" name="coeffPince" id="coeffPince"  max="1" min="0" step="0.00001"><br><br>
+                  </div>
+                </form>
+             <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="coeffTension">coeffTension: </label>
+                    <input type="number" name="coeffTension" id="coeffTension"  max="1" min="0" step="0.00001"><br><br>
+                  </div>
+                </form>
+
+  
+  
+  
+                <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="Tolerance-neg">Tolerance-neg: </label>
+                    <input type="number" name="Tolerance-neg" id="Tolerance-neg"  max="1" min="0" step="0.1"><br><br>
+                  </div>
+                </form>
+              
+                <form action="" method="POST" class="form-param">  
+                  <div class="form-param">
+                    <label for="dem-Batterie">Démarrage Batterie: </label>
+                    <input type="number" name="dem-Batterie" id="dem-Batterie"  max="100" min="12" step="0.1"><br><br>
+                  </div>
+                </form>
+              
+              <h3>Seuils de sortie2</h3> <br>
+                <form action="" method="POST" class="form-param">                 
+                 <div class="form-param">
+                    <label for="TempHaut">Température de basculement: </label>
+                    <input type="number" name="TempHaut" id="TempHaut"  max="100" min="0" step="1"><br><br>
+                  </div>
+                </form>
+              
+                <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="TempBas">Température de retour: </label>
+                    <input type="number" name="TempBas" id="TempBas"  max="100" min="0" step="1"><br><br>
+                  </div>
+                </form>
+ 
+              <h3>Seuils du relais</h3> <br>
+                <form action="" method="POST" class="form-param">                 
+                   <div class="form-param">
+                    <label for="relaisvalmax">Température ou tension de mise à 1: </label>
+                    <input type="number" name="relaisvalmax" id="relaisvalmax"  max="100" min="0" step="1"><br><br>
+                  </div>
+                </form>
+              
+                <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="relaisvalmin">Température ou tension de mise à 0: </label>
+                    <input type="number" name="relaisvalmin" id="relaisvalmin"  max="100" min="0" step="1"><br><br>
+                  </div>
+                </form>
+ 
+                <br><br>
+
+         <h1>Paramètres réseau</h1> <br>
+                   
+                <form action="" method="POST" class="form-param">
+                   <div class="form-param">
+                    <label for="ssid">Nom du ssid réseau: </label>
+                    <input type="text" name="ssid" id="ssid" title="Exemple livebox-123456" maxlength="15" required><br><br>
+                    <label for="ssidpassword">Mot de passe réseau: </label>
+                    <input type="password" name="ssidpassword" id="ssidpassword" maxlength="30" required><br><br>
+                    <label for="enreg">Redemarrage Routeur: </label>
+                    <input  type="submit" name="enreg" id="enreg" title="Enregistrer et rebooter" maxlength="15" value="Enregistrer" size="50"><br><br>                  </div>
+                </form>
+
+             <h3><br>Informations Broker MQTT</h3> <br>
+
+                <form action="" method="POST" class="form-param">
+                  <div class="form-param">
+                    <label for="broker">Adresse Broker MQTT: </label>
+                    <input type="text" name="broker" id="broker" title="Exemple 192.168.1.28" maxlength="15" size="16" required><br><br>
+                    <label for="brokeruser">User du Broker MQTT: </label>
+                    <input type="text" name="brokeruser" id="brokeruser"  maxlength="15" size="16" ><br><br>
+                    <label for="brokerpassword">Mot de passe réseau: </label>
+                    <input type="text" name="brokerpassword" id="brokerpassword" maxlength="20" size="32" ><br><br>
+                    <label for="topic">Nom du topic MQTT: </label>
+                    <input type="text" name="topic" id="topic" title="topic-routeur/" maxlength="20" size="16" required><br><br>
+                     <label for="enreg">Redemarrage Routeur: </label>
+                    <input  type="submit" name="enreg" id="enreg" title="Enregistrer et rebooter" maxlength="15" value="Enregistrer" size="50"  ><br><br>                  </div>
+                 </div>
+                </form>
+      
+
+
+   <!---footer class="footer">
+        <span id='systemfooter' onclick="updateRoute('system')">Paramétres Système</span>
+        <span id='generalfooter' onclick="updateRoute('general');">Paramétres Généraux</span>
+        <span id='chartfooter' onclick="updateRoute('chart');">Graphique</span>
+    </footer-->
+
+    <script type="text/javascript">
+      //ce caractere sert à recevoir les infos de l'esp32   |
+     // unset($_POST);
+     
+    </script>
+
+
+    <br><br><br><br>
+</body>
+    
+
+
+</html>
