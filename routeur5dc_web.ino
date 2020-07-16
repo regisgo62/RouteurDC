@@ -1,6 +1,5 @@
 //**************************************************************/
-// L'équipe de bidouilleurs discord reseautonome vous présente
-// la réalisation d'un gradateur pour chauffe-eau en off grid
+// Réalisation d'un gradateur pour chauffe-eau en off grid
 // gradateur synchronisé sur la production photovoltaique
 // sans tirage sur les batteries pour utiliser le surplus dans
 // un ballon d'eau chaude
@@ -109,7 +108,6 @@ void setup()
   RAAfficheur.setup();
 #endif
 
-
 #ifdef EEprom
   RAPrgEEprom.setup();
 #endif
@@ -152,24 +150,24 @@ void setup()
   ledcSetup(0, 5000, 10); // canal = 0, frequence = 5000 Hz, resolution = 10 bits 1024points
 #endif
 
-
   delay(500);
   RATriac.watchdog(0);       // initialise le watchdog
   RATriac.start_interrupt(); // demarre l'interruption de zerocrossing et du timer pour la gestion du triac
 
 }
 
-int iloop = 0; // pour le parametrage par niveau
 
+
+int iloop = 0; // pour le parametrage par niveau
 
 void loop()
 {
   RATriac.watchdog(1);                  //chien de garde à 4secondes dans timer0
 #ifndef simulation
-  RAMesure.mesurePinceTension(700, 20); // mesure le courant et la tension avec 2 boucles de filtrage (700,20)
+    RAMesure.mesurePinceTension(700, 20); // mesure le courant et la tension avec 2 boucles de filtrage (700,20)
  #ifdef CourantAClimite
-  RAMesure.mesurePinceAC(pinPinceAC,0.321,false); // mesure le courant à l'entrée de l'onduleur pour couper le routeur
-#endif 
+    RAMesure.mesurePinceAC(pinPinceAC,0.321,false); // mesure le courant à l'entrée de l'onduleur pour couper le routeur
+ #endif 
 #endif 
 
 #ifdef simulation
@@ -203,12 +201,12 @@ void loop()
   
    if (modeparametrage)
   {
-    int potar = map(analogRead(pinPotentiometre), 0, 4095, 0, 1000); // controle provisoire avec pot
+/*    int potar = map(analogRead(pinPotentiometre), 0, 4095, 0, 1000); // controle provisoire avec pot
         if (potar>10) puissanceGradateur=potar;
        else  if (potar<2) puissanceGradateur=0;
-                    else puissanceGradateur=1; // priorité au potensiometre                    
+                    else puissanceGradateur=1; // priorité au potensiometre        */            
    
-  /*  iloop++;
+    iloop++;
     if (iloop < 10*3) puissanceGradateur = 0;
       else if (iloop < 20*3)  puissanceGradateur = 100;
             else if (iloop < 30*3)    puissanceGradateur = 200;
@@ -217,9 +215,9 @@ void loop()
                             else if (iloop < 60*3) puissanceGradateur = 700;
                                else if (iloop < 70*3) puissanceGradateur = 800;
                                   else if (iloop < 80*3) puissanceGradateur = 900;
-                                          else  iloop = 0;*/
+                                          else  iloop = 0;
  
-   Serial.println();
+    Serial.println();
     Serial.print("Courant ");
     Serial.println(intensiteDC);
     Serial.print("tension ");
@@ -253,16 +251,12 @@ void loop()
 //  Serial.print(',');
 //  Serial.println(puissanceAC/100);
 
-//RAMesure.mesurePinceAC(pinPince,0.321,false);
-//puissanceGradateur=300;
 
 #ifdef relaisPWM
   ledcWrite(0, long(puissanceGradateur*1024/1000));  //  canal = 0, rapport cyclique = 
 #endif
 
 #ifdef EcranOled
- //  intensiteBatterie=RAMesure.mesurePinceAC(pinPinceAC,1.0467,false); // mesure le courant à l'entrée de l'onduleur pour couper le routeur
-
   RAAfficheur.affichage_oled(); // affichage de lcd
 #endif
 
