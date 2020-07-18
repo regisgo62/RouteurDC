@@ -18,7 +18,7 @@ const int pinSortie2 = 13;       // pin13 pour  2eme "gradateur
 const int pinRelais = 19;        // Pin19 pour sortie relais
 // analogique
 const int pinPince = 32;         // GPIO32   pince effet hall
-const int pinPinceAC = 32;       // GPIO35   pince alternative
+const int pinPinceAC = 35;       // GPIO35   pince alternative
 const int pinPinceACref = 39;    // GPIO39   ref tension pour pince AC 30A/1V
 const int pinPinceRef = 34;      // GPIO34   pince effet hall ref 2.5V
 const int pinPotentiometre = 35; // GPIO35   potentiomètre
@@ -244,10 +244,12 @@ void loop()
   Serial.print(routeur.seuilDemarrageBatterie / 5);
   Serial.print(',');
   Serial.print(capteurTension / 5);
+#ifndef CourantAClimite
+  Serial.print(',');
+  Serial.print(intensiteAC) );
+#endif
   Serial.print(',');
   Serial.println(-routeur.toleranceNegative);
-//  Serial.print(',');
-//  Serial.print(intensiteAC) );
 //  Serial.print(',');
 //  Serial.println(puissanceAC/100);
 
